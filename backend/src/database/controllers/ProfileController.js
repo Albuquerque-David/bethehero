@@ -1,0 +1,23 @@
+const connection = require('../connection');
+
+
+module.exports = 
+{
+    async index(request,response)
+    {
+        try
+        {
+            const ong_id = request.headers.authorization;
+
+            const incidents = await connection('incidents')
+                                    .where('ong_id', ong_id)
+                                    .select('*');
+    
+            return response.json(incidents);
+        }
+        catch(err)
+        {
+            return response.json(err)
+        }
+    }
+}
